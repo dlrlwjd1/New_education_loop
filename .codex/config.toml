@@ -1,0 +1,30 @@
+# Project-scoped MCP servers for the Codex VS Code extension and CLI.
+# Setup and usage: docs/mcp-setup.md
+
+[mcp_servers.context7]
+url = "https://mcp.context7.com/mcp"
+startup_timeout_sec = 30
+tool_timeout_sec = 60
+
+[mcp_servers.playwright]
+command = "npx"
+args = ["--yes", "@playwright/mcp@0.0.80", "--browser", "chromium", "--headless", "--isolated"]
+startup_timeout_sec = 60
+tool_timeout_sec = 120
+
+[mcp_servers.notion]
+url = "https://mcp.notion.com/mcp"
+startup_timeout_sec = 30
+tool_timeout_sec = 120
+
+# Google Drive and Gmail share one local MCP server and OAuth login.
+[mcp_servers.google_workspace]
+command = "/Users/billingeo/.local/bin/uvx"
+args = ["--from", "workspace-mcp==1.25.2", "workspace-mcp", "--transport", "stdio", "--single-user", "--tools", "drive", "gmail", "--tool-tier", "extended"]
+startup_timeout_sec = 60
+tool_timeout_sec = 120
+
+[mcp_servers.google_workspace.env]
+GOOGLE_CLIENT_SECRET_PATH = "/Users/billingeo/.config/new-education-loop/google-oauth-client.json"
+WORKSPACE_MCP_CREDENTIALS_DIR = "/Users/billingeo/.config/new-education-loop/google-credentials"
+WORKSPACE_MCP_HOST = "127.0.0.1"
