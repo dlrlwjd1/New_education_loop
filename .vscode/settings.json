@@ -1,0 +1,10 @@
+{
+  "workbench.editorAssociations": {
+    "*.md": "vscode.markdown.preview.editor"
+  },
+  "files.exclude": {
+    "**/.DS_Store": true
+  },
+  "markdown.preview.fontSize": 15,
+  "editor.wordWrap": "on"
+}
