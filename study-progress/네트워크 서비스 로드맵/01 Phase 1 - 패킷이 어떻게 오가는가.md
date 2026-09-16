@@ -2,7 +2,7 @@
 
 - 목표: "요청이 안 간다"는 말을 **어느 계층에서 무엇이 막혔는지**로 바꿔 말할 수 있게 된다.
 - 분량: 약 12시간
-- 마지막 학습일: (미학습)
+- 마지막 학습일: 2026-09-14
 
 ## 이 단계가 끝나면 할 수 있어야 하는 것
 
@@ -19,14 +19,14 @@
 
 메인: IBM DevOps and Software Engineering, `13 Application Security` Module 1
 
-- [ ] [06 The OSI Model.md](../../courses/mooc/DevOps%20and%20SRE/IBM%20DevOps%20and%20Software%20Engineering/13%20Application%20Security/Module%201%20-%20Introduction%20to%20DevSecOps%20and%20Network%20Security/06%20The%20OSI%20Model.md) — **여기서 시작한다.** 7계층 각각이 무엇을 책임지는지 한국어로 깔끔하게 정리돼 있다. 개발자가 집중할 상위 3계층(세션·표현·응용)과 그 보안 함의까지 짚는다 — 학습일 2026-09-04
-- [ ] [07 Securing Layers for Application Development.md](../../courses/mooc/DevOps%20and%20SRE/IBM%20DevOps%20and%20Software%20Engineering/13%20Application%20Security/Module%201%20-%20Introduction%20to%20DevSecOps%20and%20Network%20Security/07%20Securing%20Layers%20for%20Application%20Development.md) — 계층별로 무엇을 지켜야 하는지. Phase 8의 밑그림이 된다
+- [x] [06 The OSI Model.md](../../courses/mooc/DevOps%20and%20SRE/IBM%20DevOps%20and%20Software%20Engineering/13%20Application%20Security/Module%201%20-%20Introduction%20to%20DevSecOps%20and%20Network%20Security/06%20The%20OSI%20Model.md) — **여기서 시작한다.** 7계층 각각이 무엇을 책임지는지 한국어로 깔끔하게 정리돼 있다. 개발자가 집중할 상위 3계층(세션·표현·응용)과 그 보안 함의까지 짚는다 — 학습일 2026-09-14
+- [x] [07 Securing Layers for Application Development.md](../../courses/mooc/DevOps%20and%20SRE/IBM%20DevOps%20and%20Software%20Engineering/13%20Application%20Security/Module%201%20-%20Introduction%20to%20DevSecOps%20and%20Network%20Security/07%20Securing%20Layers%20for%20Application%20Development.md) — 계층별로 무엇을 지켜야 하는지. Phase 8의 밑그림이 된다 — 학습일 2026-09-14
 
 함께 보기: Hands-on IoT, Course 1 Module 1 (같은 내용을 더 넓게, 인터넷 전체 구조 관점에서)
 
-- [ ] [02 Lecture 1 - How the Internet Works.md](../../courses/mooc/Others/Hands-on%20Internet%20of%20Things/Course%201%20-%20IoT%20Devices/Module%201%20-%20Orientation%20Basics%20and%20Lab%20Instructions/02%20Lecture%201%20-%20How%20the%20Internet%20Works.md)
-- [ ] [03 Lecture 2 - How Can Many Hosts Communicate.md](../../courses/mooc/Others/Hands-on%20Internet%20of%20Things/Course%201%20-%20IoT%20Devices/Module%201%20-%20Orientation%20Basics%20and%20Lab%20Instructions/03%20Lecture%202%20-%20How%20Can%20Many%20Hosts%20Communicate.md)
-- [ ] [04 Lecture 3 - What is a Protocol.md](../../courses/mooc/Others/Hands-on%20Internet%20of%20Things/Course%201%20-%20IoT%20Devices/Module%201%20-%20Orientation%20Basics%20and%20Lab%20Instructions/04%20Lecture%203%20-%20What%20is%20a%20Protocol.md)
+- [x] [02 Lecture 1 - How the Internet Works.md](../../courses/mooc/Others/Hands-on%20Internet%20of%20Things/Course%201%20-%20IoT%20Devices/Module%201%20-%20Orientation%20Basics%20and%20Lab%20Instructions/02%20Lecture%201%20-%20How%20the%20Internet%20Works.md)
+- [x] [03 Lecture 2 - How Can Many Hosts Communicate.md](../../courses/mooc/Others/Hands-on%20Internet%20of%20Things/Course%201%20-%20IoT%20Devices/Module%201%20-%20Orientation%20Basics%20and%20Lab%20Instructions/03%20Lecture%202%20-%20How%20Can%20Many%20Hosts%20Communicate.md)
+- [x] [04 Lecture 3 - What is a Protocol.md](../../courses/mooc/Others/Hands-on%20Internet%20of%20Things/Course%201%20-%20IoT%20Devices/Module%201%20-%20Orientation%20Basics%20and%20Lab%20Instructions/04%20Lecture%203%20-%20What%20is%20a%20Protocol.md)
 - [ ] [05 Lecture 4 - Protocol Stacks.md](../../courses/mooc/Others/Hands-on%20Internet%20of%20Things/Course%201%20-%20IoT%20Devices/Module%201%20-%20Orientation%20Basics%20and%20Lab%20Instructions/05%20Lecture%204%20-%20Protocol%20Stacks.md)
 
 캡슐화를 헤더 단위로: Hands-on IoT, Course 3 Module 3

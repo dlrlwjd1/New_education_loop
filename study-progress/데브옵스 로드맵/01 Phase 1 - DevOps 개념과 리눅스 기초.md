@@ -2,7 +2,7 @@
 
 - 목표: DevOps가 무엇을 해결하려는 것인지, 파이프라인의 단계가 무엇인지 전체 지도를 갖는다. 그리고 리눅스에서 손이 막히지 않게 만든다.
 - 분량: 약 5~6시간
-- 마지막 학습일: (미학습)
+- 마지막 학습일: 2026-09-17
 
 ## 이 단계가 끝나면 할 수 있어야 하는 것
 
@@ -16,11 +16,11 @@
 
 메인: Master DevOps, Course 1, Module 1 (앞부분)
 
-- [ ] [01 Specialization Introduction.md](../../courses/mooc/DevOps%20and%20SRE/Master%20DevOps%20-%20CI-CD,%20Automation%20and%20Monitoring/Course%201%20-%20DevOps%20Essentials%20and%20Git/Module%201%20-%20Introduction%20to%20DevOps%20and%20Linux/01%20Specialization%20Introduction.md)
-- [ ] [02 Welcome to DevOps Essentials and Version Control with Git.md](../../courses/mooc/DevOps%20and%20SRE/Master%20DevOps%20-%20CI-CD,%20Automation%20and%20Monitoring/Course%201%20-%20DevOps%20Essentials%20and%20Git/Module%201%20-%20Introduction%20to%20DevOps%20and%20Linux/02%20Welcome%20to%20DevOps%20Essentials%20and%20Version%20Control%20with%20Git.md)
-- [ ] [03 Course Introduction.md](../../courses/mooc/DevOps%20and%20SRE/Master%20DevOps%20-%20CI-CD,%20Automation%20and%20Monitoring/Course%201%20-%20DevOps%20Essentials%20and%20Git/Module%201%20-%20Introduction%20to%20DevOps%20and%20Linux/03%20Course%20Introduction.md)
-- [ ] [04 Limitations of Software Development Models - Waterfall Model.md](../../courses/mooc/DevOps%20and%20SRE/Master%20DevOps%20-%20CI-CD,%20Automation%20and%20Monitoring/Course%201%20-%20DevOps%20Essentials%20and%20Git/Module%201%20-%20Introduction%20to%20DevOps%20and%20Linux/04%20Limitations%20of%20Software%20Development%20Models%20-%20Waterfall%20Model.md) — **폭포수 모델의 한계** — 여기서 문제 정의가 시작된다
-- [ ] [05 Limitations of Software Development Models - Agile Model.md](../../courses/mooc/DevOps%20and%20SRE/Master%20DevOps%20-%20CI-CD,%20Automation%20and%20Monitoring/Course%201%20-%20DevOps%20Essentials%20and%20Git/Module%201%20-%20Introduction%20to%20DevOps%20and%20Linux/05%20Limitations%20of%20Software%20Development%20Models%20-%20Agile%20Model.md) — 애자일도 개발까지만 빨라졌다. 배포가 병목으로 남는다는 것이 DevOps의 출발점
+- [x] [01 Specialization Introduction.md](../../courses/mooc/DevOps%20and%20SRE/Master%20DevOps%20-%20CI-CD,%20Automation%20and%20Monitoring/Course%201%20-%20DevOps%20Essentials%20and%20Git/Module%201%20-%20Introduction%20to%20DevOps%20and%20Linux/01%20Specialization%20Introduction.md) — 학습일 2026-09-15
+- [x] [02 Welcome to DevOps Essentials and Version Control with Git.md](../../courses/mooc/DevOps%20and%20SRE/Master%20DevOps%20-%20CI-CD,%20Automation%20and%20Monitoring/Course%201%20-%20DevOps%20Essentials%20and%20Git/Module%201%20-%20Introduction%20to%20DevOps%20and%20Linux/02%20Welcome%20to%20DevOps%20Essentials%20and%20Version%20Control%20with%20Git.md)
+- [x] [03 Course Introduction.md](../../courses/mooc/DevOps%20and%20SRE/Master%20DevOps%20-%20CI-CD,%20Automation%20and%20Monitoring/Course%201%20-%20DevOps%20Essentials%20and%20Git/Module%201%20-%20Introduction%20to%20DevOps%20and%20Linux/03%20Course%20Introduction.md)
+- [x] [04 Limitations of Software Development Models - Waterfall Model.md](../../courses/mooc/DevOps%20and%20SRE/Master%20DevOps%20-%20CI-CD,%20Automation%20and%20Monitoring/Course%201%20-%20DevOps%20Essentials%20and%20Git/Module%201%20-%20Introduction%20to%20DevOps%20and%20Linux/04%20Limitations%20of%20Software%20Development%20Models%20-%20Waterfall%20Model.md) — **폭포수 모델의 한계** — 여기서 문제 정의가 시작된다
+- [x] [05 Limitations of Software Development Models - Agile Model.md](../../courses/mooc/DevOps%20and%20SRE/Master%20DevOps%20-%20CI-CD,%20Automation%20and%20Monitoring/Course%201%20-%20DevOps%20Essentials%20and%20Git/Module%201%20-%20Introduction%20to%20DevOps%20and%20Linux/05%20Limitations%20of%20Software%20Development%20Models%20-%20Agile%20Model.md) — 애자일도 개발까지만 빨라졌다. 배포가 병목으로 남는다는 것이 DevOps의 출발점
 - [ ] [06 Scenario - Understanding DevOps.md](../../courses/mooc/DevOps%20and%20SRE/Master%20DevOps%20-%20CI-CD,%20Automation%20and%20Monitoring/Course%201%20-%20DevOps%20Essentials%20and%20Git/Module%201%20-%20Introduction%20to%20DevOps%20and%20Linux/06%20Scenario%20-%20Understanding%20DevOps.md)
 - [ ] [07 Introduction to DevOps.md](../../courses/mooc/DevOps%20and%20SRE/Master%20DevOps%20-%20CI-CD,%20Automation%20and%20Monitoring/Course%201%20-%20DevOps%20Essentials%20and%20Git/Module%201%20-%20Introduction%20to%20DevOps%20and%20Linux/07%20Introduction%20to%20DevOps.md) — **핵심 강의**
 - [ ] [08 DevOps Adoption.md](../../courses/mooc/DevOps%20and%20SRE/Master%20DevOps%20-%20CI-CD,%20Automation%20and%20Monitoring/Course%201%20-%20DevOps%20Essentials%20and%20Git/Module%201%20-%20Introduction%20to%20DevOps%20and%20Linux/08%20DevOps%20Adoption.md) — 도입은 기술이 아니라 조직 문제다
