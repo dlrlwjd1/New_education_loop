@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    :root{--bg:#f6f7f3;--paper:#fff;--ink:#202d27;--muted:#6b7567;--line:#e1e6df;--forest:#176448;--soft:#edf3e9;--radius:16px;--shadow:0 3px 14px #1c342504}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;font-size:14px;line-height:1.6}
+    .note-wrap{max-width:1400px;margin:0 auto;padding:24px 36px;height:100%;display:flex;align-items:center}
+    .note-box{border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);box-shadow:var(--shadow);padding:26px 32px;width:100%}
+    .note-box .eyebrow{font-size:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--forest);margin:0}
+    .note-box h2{font-size:17px;font-weight:650;letter-spacing:-.3px;margin:8px 0 0;color:var(--ink)}
+    .note-box h2 code{font-size:12px;font-weight:500;color:var(--muted);background:var(--soft);border-radius:5px;padding:2px 7px;margin-left:8px}
+    .note-box p{font-size:13px;line-height:1.9;color:var(--muted);margin:12px 0 0;max-width:1020px}
+    .note-box .ref{display:inline-block;margin-top:14px;font-size:11px;font-weight:600;color:#527042;background:var(--soft);border-radius:6px;padding:4px 10px}
+  </style>
+</helmet>
+<div class="note-wrap">
+  <div class="note-box">
+    <p class="eyebrow">화면 설명</p>
+    <h2>AI 학습실<code>Study.dc.html</code></h2>
+    <p>질문 하나 → 답변 → 채점 피드백 → 정교화 질문 → 세 줄 정리가 페이지 전환 없이 한 대화창 안에서 이어지는 화면이다. 답변을 제출하기 전에는 정답이나 힌트를 보여주지 않는다. 상단 "로드맵 모드" 토글을 켜면 왼쪽에 로드맵 목차 사이드바가 나타나 특정 Phase·항목 순서로 학습을 이어갈 수 있다.</p>
+    <span class="ref">F03~F05, F07 참고</span>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

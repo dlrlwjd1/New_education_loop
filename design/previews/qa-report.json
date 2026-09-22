@@ -1,0 +1,125 @@
+{
+  "passed": true,
+  "screenshots": [
+    "briefing-desktop.png",
+    "study-desktop.png",
+    "roadmap-desktop.png",
+    "briefing-mobile.png"
+  ],
+  "errors": [],
+  "blockedNetwork": [],
+  "reports": [
+    {
+      "check": "navigation to briefing",
+      "url": "file:///Users/billingeo/Documents/GitHub/New_education_loop/design/learning-loop-preview.html#briefing"
+    },
+    {
+      "check": "desktop briefing: no horizontal overflow",
+      "widths": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440,
+        "offenders": []
+      }
+    },
+    {
+      "check": "navigation to study",
+      "url": "file:///Users/billingeo/Documents/GitHub/New_education_loop/design/learning-loop-preview.html#study"
+    },
+    {
+      "check": "desktop study: no horizontal overflow",
+      "widths": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440,
+        "offenders": []
+      }
+    },
+    {
+      "check": "navigation to roadmap",
+      "url": "file:///Users/billingeo/Documents/GitHub/New_education_loop/design/learning-loop-preview.html#roadmap"
+    },
+    {
+      "check": "desktop roadmap: no horizontal overflow",
+      "widths": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440,
+        "offenders": []
+      }
+    },
+    {
+      "check": "navigation to study",
+      "url": "file:///Users/billingeo/Documents/GitHub/New_education_loop/design/learning-loop-preview.html#study"
+    },
+    {
+      "check": "skip link preserves study route and focuses main"
+    },
+    {
+      "check": "empty and whitespace answer disabled; nonempty answer shows demo guidance without grading",
+      "guidance": "답변 제출 화면을 확인했습니다. 이 시안에서는 저장·채점하지 않으며, AI 연결 후 피드백이 제공됩니다."
+    },
+    {
+      "check": "desktop study after submission: no horizontal overflow",
+      "widths": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440,
+        "offenders": []
+      }
+    },
+    {
+      "check": "pause returns to briefing"
+    },
+    {
+      "check": "navigation to roadmap",
+      "url": "file:///Users/billingeo/Documents/GitHub/New_education_loop/design/learning-loop-preview.html#roadmap"
+    },
+    {
+      "check": "roadmap prior-knowledge toggle, whitespace validation, and demo generation guidance"
+    },
+    {
+      "check": "navigation to briefing",
+      "url": "file:///Users/billingeo/Documents/GitHub/New_education_loop/design/learning-loop-preview.html#briefing"
+    },
+    {
+      "check": "mobile briefing: no horizontal overflow",
+      "widths": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390,
+        "offenders": []
+      }
+    },
+    {
+      "check": "navigation to study",
+      "url": "file:///Users/billingeo/Documents/GitHub/New_education_loop/design/learning-loop-preview.html#study"
+    },
+    {
+      "check": "mobile study: no horizontal overflow",
+      "widths": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390,
+        "offenders": []
+      }
+    },
+    {
+      "check": "navigation to roadmap",
+      "url": "file:///Users/billingeo/Documents/GitHub/New_education_loop/design/learning-loop-preview.html#roadmap"
+    },
+    {
+      "check": "mobile roadmap: no horizontal overflow",
+      "widths": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390,
+        "offenders": []
+      }
+    },
+    {
+      "check": "navigation to briefing",
+      "url": "file:///Users/billingeo/Documents/GitHub/New_education_loop/design/learning-loop-preview.html#briefing"
+    }
+  ]
+}

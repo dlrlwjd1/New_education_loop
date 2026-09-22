@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    :root{--bg:#f6f7f3;--paper:#fff;--ink:#202d27;--muted:#6b7567;--line:#e1e6df;--forest:#176448;--soft:#edf3e9;--radius:16px;--shadow:0 3px 14px #1c342504}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;font-size:14px;line-height:1.6}
+    .note-wrap{max-width:1400px;margin:0 auto;padding:24px 36px;height:100%;display:flex;align-items:center}
+    .note-box{border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);box-shadow:var(--shadow);padding:26px 32px;width:100%}
+    .note-box .eyebrow{font-size:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--forest);margin:0}
+    .note-box h2{font-size:17px;font-weight:650;letter-spacing:-.3px;margin:8px 0 0;color:var(--ink)}
+    .note-box h2 code{font-size:12px;font-weight:500;color:var(--muted);background:var(--soft);border-radius:5px;padding:2px 7px;margin-left:8px}
+    .note-box p{font-size:13px;line-height:1.9;color:var(--muted);margin:12px 0 0;max-width:1020px}
+    .note-box .ref{display:inline-block;margin-top:14px;font-size:11px;font-weight:600;color:#527042;background:var(--soft);border-radius:6px;padding:4px 10px}
+  </style>
+</helmet>
+<div class="note-wrap">
+  <div class="note-box">
+    <p class="eyebrow">화면 설명</p>
+    <h2>학습 기록<code>StudyHistory.dc.html</code></h2>
+    <p>지난 학습 세션을 날짜·로드맵·주제별로 모아보는 화면이다. 완료/중단됨·마무리 대기 상태와 정답·오답 수, 사용자가 직접 쓴 세 줄 요약을 한눈에 확인할 수 있고, 중단된 세션은 이어하기로 바로 복귀한다.</p>
+    <span class="ref">F10 참고</span>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

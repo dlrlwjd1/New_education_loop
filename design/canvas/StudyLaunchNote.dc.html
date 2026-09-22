@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    :root{--bg:#f6f7f3;--paper:#fff;--ink:#202d27;--muted:#6b7567;--line:#e1e6df;--forest:#176448;--soft:#edf3e9;--radius:16px;--shadow:0 3px 14px #1c342504}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;font-size:14px;line-height:1.6}
+    .note-wrap{max-width:1400px;margin:0 auto;padding:24px 36px;height:100%;display:flex;align-items:center}
+    .note-box{border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);box-shadow:var(--shadow);padding:26px 32px;width:100%}
+    .note-box .eyebrow{font-size:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--forest);margin:0}
+    .note-box h2{font-size:17px;font-weight:650;letter-spacing:-.3px;margin:8px 0 0;color:var(--ink)}
+    .note-box h2 code{font-size:12px;font-weight:500;color:var(--muted);background:var(--soft);border-radius:5px;padding:2px 7px;margin-left:8px}
+    .note-box p{font-size:13px;line-height:1.9;color:var(--muted);margin:12px 0 0;max-width:1020px}
+    .note-box .ref{display:inline-block;margin-top:14px;font-size:11px;font-weight:600;color:#527042;background:var(--soft);border-radius:6px;padding:4px 10px}
+  </style>
+</helmet>
+<div class="note-wrap">
+  <div class="note-box">
+    <p class="eyebrow">화면 설명</p>
+    <h2>AI 학습실 진입 — 무엇을 공부할까요?<code>StudyLaunch.dc.html</code></h2>
+    <p>AI 학습실에 처음 들어왔을 때 무엇을 공부할지 고르는 화면이다. 주제 직접 입력, 진행 중 로드맵 이어하기, 자료실에서 고르기, 아무것도 못 정했을 때의 자동 추천(오늘 복습 → 진행 중 로드맵 → 로드맵 후보 순)까지 네 갈래를 보여준다. 이미 특정 로드맵·자료가 정해진 진입(예: 로드맵 개요의 "이어서 공부")은 이 화면을 거치지 않고 바로 학습실로 간다.</p>
+    <span class="ref">F03 참고</span>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

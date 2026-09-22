@@ -1,0 +1,23 @@
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+
+node_modules/
+dist/
+build/
+coverage/
+*.log
+.env
+.env.*
+
+.venv/
+__pycache__/
+*.pyc
+
+.claude/settings.local.json
+
+내학습/learning-loop.db
+
+# 002-persistence-layer: SQLite derived cache (FR-010, 구현전_결정사항.md 7.1)
+backend/.cache/

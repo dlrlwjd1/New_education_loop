@@ -1,0 +1,201 @@
+/* Feature 003: minimal responsive stylesheet for the server-rendered
+   roadmap/materials screens. No build step, no client JS dependency. */
+
+:root {
+  color-scheme: light dark;
+  --max-content-width: 960px;
+  --gap: 1rem;
+  --border-color: #d0d0d0;
+  --badge-color: #b45309;
+  --done-color: #15803d;
+  --not-done-color: #6b7280;
+  --needs-review-color: #b91c1c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.5;
+  color: #1a1a1a;
+  background: #ffffff;
+  /* Roadmap/material ids and source paths are long unbroken tokens (e.g.
+     64-char hex hashes) — without this, they overflow the viewport
+     horizontally at narrow (mobile) widths instead of wrapping. */
+  overflow-wrap: anywhere;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #e5e5e5;
+    background: #121212;
+  }
+}
+
+.site-nav {
+  display: flex;
+  gap: var(--gap);
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.site-nav a {
+  text-decoration: none;
+  font-weight: 600;
+}
+
+main {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+h2 {
+  font-size: 1.25rem;
+}
+
+h3 {
+  font-size: 1.1rem;
+}
+
+.roadmap-list,
+.material-results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.roadmap-list-item,
+.material-result-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-needs-review {
+  background: var(--badge-color);
+  color: #fff;
+}
+
+.notice {
+  padding: 0.5rem 0.75rem;
+  border: 1px dashed var(--border-color);
+  border-radius: 4px;
+}
+
+.learning-items {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+}
+
+.learning-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+}
+
+.item-state {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+
+.item-done .item-state {
+  color: var(--done-color);
+}
+
+.item-not-done .item-state {
+  color: var(--not-done-color);
+}
+
+.item-needs-review .item-state {
+  color: var(--needs-review-color);
+}
+
+.material-search-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.search-field {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  gap: 0.25rem;
+}
+
+.search-field input {
+  padding: 0.4rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  min-width: 10rem;
+}
+
+.material-body table {
+  border-collapse: collapse;
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.material-body th,
+.material-body td {
+  border: 1px solid var(--border-color);
+  padding: 0.4rem 0.6rem;
+}
+
+.material-body pre {
+  overflow-x: auto;
+  padding: 0.75rem;
+  background: rgba(127, 127, 127, 0.1);
+  border-radius: 4px;
+}
+
+.material-body img {
+  max-width: 100%;
+}
+
+@media (max-width: 480px) {
+  main {
+    padding: 0.75rem;
+  }
+
+  .site-nav {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .material-search-form {
+    flex-direction: column;
+  }
+
+  .search-field input {
+    min-width: 0;
+    width: 100%;
+  }
+}
