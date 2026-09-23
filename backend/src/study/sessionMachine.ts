@@ -39,7 +39,8 @@
  * branch explicitly (as "사전지식 확인에서 '재료 없음' 판정 →
  * awaiting_explanation_ack"). Flagged here and in the implementation report.
  */
-import type { GradingVerdict, StudyQuestionStep } from "./types.js";
+import type { GradingVerdict } from "../ai/types.js";
+import type { StudyQuestionStep } from "./types.js";
 
 export type SessionMachineEvent =
   | { kind: "ai_failure" }

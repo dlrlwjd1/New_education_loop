@@ -43,6 +43,15 @@ export interface StudyQuestion {
   currentStep: StudyQuestionStep;
   explanationText: string | null;
   explanationShownAt: string | null;
+  /**
+   * `null` until this question resolves to `resolved_incorrect`/
+   * `resolved_unknown`; then the actual outcome of `registerReviewItem()`'s
+   * cache-mirror step (the file write always succeeds first and is not
+   * separately tracked — only the cache mirror can fail, e.g. if 004's cache
+   * hasn't been loaded yet). Read back by `toSubmitAnswerResult()` instead of
+   * assumed `true` (found during QA review, schema.ts documents the deviation).
+   */
+  reviewItemRegistered: boolean | null;
 }
 
 export type AnswerAttemptStatus = "graded" | "retry_needed";
@@ -143,6 +152,17 @@ export interface StudyQuestionView {
   hintsGiven: string[];
   explanation: string | null;
   latestAttempt: {
+    /**
+     * Deviation from contracts/study-service-library.md's literal
+     * `StudyQuestionView.latestAttempt` shape (which lists only
+     * status/verdict/correctParts/incorrectParts): added so
+     * `web/routes/study.ts` can build `POST /study/answers/:attemptId/retry`'s
+     * action URL without a separate lookup. Found during frontend/backend
+     * reconciliation — `web/views/studySession.ts` needed this id and had no
+     * other way to get it (documented in that file's `renderRetryNeeded` doc
+     * comment before this field existed).
+     */
+    id: number;
     status: AnswerAttemptStatus;
     verdict: AnswerAttempt["verdict"];
     correctParts: string | null;

@@ -24,6 +24,18 @@ export const SCHEMA_VERSION = 1;
  * request". This column (nullable — `retryGrading()`'s internally-generated
  * resubmissions never carry one) is that storage. `service.ts` documents the
  * same deviation at its point of use.
+ *
+ * ## Deviation: `study_questions.review_item_registered`
+ *
+ * Found during QA review (2026-09-23): `registerReviewItem()` in
+ * `service.ts` can genuinely fail at the cache-mirror step even after the
+ * file row was written (e.g. the live cache isn't loaded yet) — the correct
+ * `reviewItemRegistered` boolean is known at that moment, but nothing
+ * persisted it, so reconstructing a `SubmitAnswerResult` later (FR-028 dedup
+ * replay, or re-deriving an already-resolved question's view) had no way to
+ * recover it and silently assumed `true`. This nullable column stores the
+ * real outcome the one time it's computed, so later reconstructions read it
+ * back instead of guessing.
  */
 const CREATE_TABLES_SQL = `
 CREATE TABLE IF NOT EXISTS study_sessions (
@@ -49,6 +61,7 @@ CREATE TABLE IF NOT EXISTS study_questions (
   current_step TEXT NOT NULL DEFAULT 'awaiting_answer',
   explanation_text TEXT NULL,
   explanation_shown_at TEXT NULL,
+  review_item_registered INTEGER NULL,
   created_at TEXT NOT NULL
 );
 

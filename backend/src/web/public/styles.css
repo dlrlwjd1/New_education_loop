@@ -248,6 +248,131 @@ h3 {
   color: var(--not-done-color);
 }
 
+/* Feature 006: study start screen + interactive session screen. */
+
+.study-start-topic,
+.study-start-material,
+.study-start-roadmap,
+.study-start-auto,
+.study-material-confirm {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.study-ambiguous-list,
+.study-suggestion-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.study-ambiguous-choice,
+.study-suggestion-roadmap {
+  padding: 0.4rem 0;
+}
+
+.study-history-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.study-history-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border-color);
+  overflow-wrap: anywhere;
+}
+
+.study-history-verdict {
+  font-weight: 600;
+  color: var(--not-done-color);
+}
+
+.study-question-prompt {
+  font-size: 1.05rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.study-hints-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.study-hint-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+  overflow-wrap: anywhere;
+}
+
+.study-hint-label {
+  font-weight: 600;
+  color: var(--badge-color);
+}
+
+.study-explanation {
+  padding: 0.75rem;
+  margin: 0.75rem 0;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: rgba(127, 127, 127, 0.08);
+}
+
+.study-explanation-text {
+  overflow-wrap: anywhere;
+}
+
+.study-answer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+}
+
+.study-answer-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font: inherit;
+  resize: vertical;
+}
+
+.study-dont-know {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.study-verdict {
+  padding: 0.75rem;
+  margin: 0.75rem 0;
+  border-radius: 4px;
+  overflow-wrap: anywhere;
+}
+
+.study-verdict-correct {
+  background: rgba(46, 160, 67, 0.1);
+  border: 1px solid var(--done-color);
+}
+
+.study-verdict-wrong {
+  background: rgba(200, 60, 60, 0.1);
+  border: 1px solid var(--needs-review-color);
+}
+
+.study-retry-notice {
+  color: var(--needs-review-color);
+  font-weight: 600;
+}
+
 @media (max-width: 480px) {
   main {
     padding: 0.75rem;
@@ -263,6 +388,10 @@ h3 {
 
   .search-field input {
     min-width: 0;
+    width: 100%;
+  }
+
+  .study-answer-form textarea {
     width: 100%;
   }
 }

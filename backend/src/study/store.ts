@@ -143,6 +143,7 @@ interface QuestionRow {
   current_step: string;
   explanation_text: string | null;
   explanation_shown_at: string | null;
+  review_item_registered: number | null;
 }
 
 function hydrateQuestion(row: QuestionRow): StudyQuestion {
@@ -156,11 +157,12 @@ function hydrateQuestion(row: QuestionRow): StudyQuestion {
     currentStep: row.current_step as StudyQuestionStep,
     explanationText: row.explanation_text,
     explanationShownAt: row.explanation_shown_at,
+    reviewItemRegistered: row.review_item_registered === null ? null : row.review_item_registered === 1,
   };
 }
 
 const QUESTION_COLUMNS =
-  "id, session_id, order_index, kind, prompt_text, concept_label, current_step, explanation_text, explanation_shown_at";
+  "id, session_id, order_index, kind, prompt_text, concept_label, current_step, explanation_text, explanation_shown_at, review_item_registered";
 
 export function insertQuestion(input: InsertQuestionInput, dbPath: string = DEFAULT_STUDY_DB_PATH): StudyQuestion {
   const db = openStudyDb(dbPath);
@@ -193,6 +195,7 @@ export function insertQuestion(input: InsertQuestionInput, dbPath: string = DEFA
       currentStep,
       explanationText: input.explanationText ?? null,
       explanationShownAt: input.explanationShownAt ?? null,
+      reviewItemRegistered: null,
     };
   } finally {
     db.close();
@@ -215,14 +218,18 @@ export interface UpdateQuestionProgressInput {
   currentStep: StudyQuestionStep;
   explanationText?: string | null;
   explanationShownAt?: string | null;
+  /** Set only when `currentStep` is `resolved_incorrect`/`resolved_unknown` — the real outcome of `registerReviewItem()`'s cache-mirror step (schema.ts's deviation note). */
+  reviewItemRegistered?: boolean;
 }
 
 /**
  * Mutates a `study_questions` row's step (and, when transitioning into
- * `awaiting_explanation_ack`, its explanation fields). This is NOT covered
- * by data-model.md's insert-only invariant — that invariant is scoped to
- * `study_answer_attempts` alone (a question's `current_step` is exactly the
- * mutable state the whole feature's state machine exists to advance).
+ * `awaiting_explanation_ack`, its explanation fields, or when resolving to
+ * incorrect/unknown, its `review_item_registered` outcome). This is NOT
+ * covered by data-model.md's insert-only invariant — that invariant is
+ * scoped to `study_answer_attempts` alone (a question's `current_step` is
+ * exactly the mutable state the whole feature's state machine exists to
+ * advance).
  */
 export function updateQuestionProgress(
   questionId: number,
@@ -231,6 +238,14 @@ export function updateQuestionProgress(
 ): void {
   const db = openStudyDb(dbPath);
   try {
+    if (input.reviewItemRegistered !== undefined) {
+      db.prepare("UPDATE study_questions SET current_step = ?, review_item_registered = ? WHERE id = ?").run(
+        input.currentStep,
+        input.reviewItemRegistered ? 1 : 0,
+        questionId,
+      );
+      return;
+    }
     if (input.explanationText !== undefined || input.explanationShownAt !== undefined) {
       db.prepare("UPDATE study_questions SET current_step = ?, explanation_text = ?, explanation_shown_at = ? WHERE id = ?").run(
         input.currentStep,
@@ -454,10 +469,10 @@ function toQuestionView(db: DatabaseSync, question: QuestionRow): StudyQuestionV
   const hintsGiven = listHintTexts(db, question.id);
   const latestAttemptRow = db
     .prepare(
-      `SELECT status, verdict, correct_parts, incorrect_parts FROM study_answer_attempts WHERE question_id = ? ORDER BY attempt_number DESC LIMIT 1`,
+      `SELECT id, status, verdict, correct_parts, incorrect_parts FROM study_answer_attempts WHERE question_id = ? ORDER BY attempt_number DESC LIMIT 1`,
     )
     .get(question.id) as
-    | { status: string; verdict: string | null; correct_parts: string | null; incorrect_parts: string | null }
+    | { id: number; status: string; verdict: string | null; correct_parts: string | null; incorrect_parts: string | null }
     | undefined;
 
   return {
@@ -468,6 +483,7 @@ function toQuestionView(db: DatabaseSync, question: QuestionRow): StudyQuestionV
     explanation: question.explanation_text,
     latestAttempt: latestAttemptRow
       ? {
+          id: latestAttemptRow.id,
           status: latestAttemptRow.status as AnswerAttemptStatus,
           verdict: latestAttemptRow.verdict as AnswerAttempt["verdict"],
           correctParts: latestAttemptRow.correct_parts,
@@ -503,7 +519,7 @@ export function getSessionView(sessionId: number, dbPath: string = DEFAULT_STUDY
 
     const questionRows = db
       .prepare(`SELECT ${QUESTION_COLUMNS} FROM study_questions WHERE session_id = ? ORDER BY order_index ASC`)
-      .all(sessionId) as QuestionRow[];
+      .all(sessionId) as unknown as QuestionRow[];
 
     return {
       sessionId: sessionRow.id,

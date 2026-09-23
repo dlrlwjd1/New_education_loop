@@ -4,6 +4,7 @@ import express, { type ErrorRequestHandler } from "express";
 import roadmapsRouter from "./routes/roadmaps.js";
 import materialsRouter from "./routes/materials.js";
 import briefingRouter from "./routes/briefing.js";
+import studyRouter from "./routes/study.js";
 import { renderMessage } from "./views/layout.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -56,6 +57,7 @@ export function createApp(): express.Express {
   app.use(roadmapsRouter);
   app.use(materialsRouter);
   app.use(briefingRouter);
+  app.use(studyRouter);
   app.use(handleError);
   return app;
 }

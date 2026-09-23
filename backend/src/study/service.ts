@@ -367,6 +367,21 @@ async function applyTransition(args: ApplyTransitionArgs): Promise<SubmitAnswerR
   }
 
   // action === "none"
+  if (nextStep === "resolved_incorrect" || nextStep === "resolved_unknown") {
+    // FR-013: computed BEFORE persisting the step change, so both the step
+    // and its real registration outcome land in one UPDATE (schema.ts's
+    // `review_item_registered` deviation note — `toSubmitAnswerResult()`
+    // below reads this back instead of assuming success).
+    const reviewItemRegistered = registerReviewItem(session, question, options);
+    updateQuestionProgress(question.id, { currentStep: nextStep, reviewItemRegistered }, dbPath);
+    const view = getQuestionView(question.id, dbPath) as StudyQuestionView;
+    return {
+      outcome: nextStep === "resolved_unknown" ? "resolved_unknown" : "resolved_incorrect",
+      question: view,
+      reviewItemRegistered,
+    };
+  }
+
   updateQuestionProgress(question.id, { currentStep: nextStep }, dbPath);
 
   if (nextStep === "resolved_correct") {
@@ -382,14 +397,11 @@ async function applyTransition(args: ApplyTransitionArgs): Promise<SubmitAnswerR
     return { outcome: "correct", question: view };
   }
 
-  // resolved_incorrect / resolved_unknown (FR-013).
+  // Only "awaiting_hint_retry"/"awaiting_explanation_ack" without an action
+  // (unreachable in practice — sessionMachine.ts always pairs those steps
+  // with give_hint/show_explanation — kept only for exhaustiveness).
   const view = getQuestionView(question.id, dbPath) as StudyQuestionView;
-  const reviewItemRegistered = registerReviewItem(session, question, options);
-  return {
-    outcome: nextStep === "resolved_unknown" ? "resolved_unknown" : "resolved_incorrect",
-    question: view,
-    reviewItemRegistered,
-  };
+  return { outcome: "correct", question: view };
 }
 
 /** Reconstructs a `SubmitAnswerResult` purely from already-stored data — used both for FR-028 dedup and for an already-resolved question (never re-grades, never re-registers a review item). */
@@ -408,7 +420,15 @@ function toSubmitAnswerResult(
       return { outcome: "correct", question: view };
     case "resolved_incorrect":
     case "resolved_unknown":
-      return { outcome: question.currentStep, question: view, reviewItemRegistered: true };
+      // Reads the persisted outcome instead of assuming success (schema.ts's
+      // `review_item_registered` deviation note) — `?? false` only guards a
+      // theoretical pre-fix row from before this column existed; every row
+      // written by the current `applyTransition()` always sets it explicitly.
+      return {
+        outcome: question.currentStep,
+        question: view,
+        reviewItemRegistered: question.reviewItemRegistered ?? false,
+      };
     case "awaiting_hint_retry": {
       const hints = view.hintsGiven;
       return { outcome: "hint_given", question: view, hint: hints[hints.length - 1] ?? "" };
@@ -586,10 +606,4 @@ export function findSessionIdForAttempt(attemptId: number, dbPath?: string): num
   }
   const question = getQuestionById(attempt.questionId, dbPath);
   return question?.sessionId ?? null;
-}
-
-/** `web/routes/study.ts` convenience export: the attemptId of a question's latest attempt, when it is `retry_needed` (used to build the retry form's action URL — `StudyQuestionView.latestAttempt` intentionally has no `id` field, see that view's route-layer wrapper). */
-export function getLatestRetryableAttemptId(questionId: number, dbPath?: string): number | null {
-  const attempt = getLatestAttempt(questionId, dbPath);
-  return attempt && attempt.status === "retry_needed" ? attempt.id : null;
 }
