@@ -13,7 +13,8 @@
     "web": "tsx src/web/server.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "check:design-sync": "tsx scripts/check-design-sync.ts"
   },
   "keywords": [],
   "author": "",

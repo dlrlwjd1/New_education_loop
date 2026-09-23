@@ -181,6 +181,73 @@ h3 {
   max-width: 100%;
 }
 
+/* Feature 005: briefing screens (main briefing, history list/detail). */
+
+.scope-picker,
+.rerun-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+}
+
+.scope-filtered {
+  padding: 0.5rem 0;
+}
+
+.roadmap-progress-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.5rem 0;
+}
+
+.roadmap-progress-table th,
+.roadmap-progress-table td {
+  border: 1px solid var(--border-color);
+  padding: 0.4rem 0.6rem;
+  text-align: left;
+}
+
+.not-started-collapse {
+  margin: 0.5rem 0;
+}
+
+.average-progress {
+  font-size: 0.9rem;
+  color: var(--not-done-color);
+}
+
+.due-items-list,
+.briefing-history-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.due-item,
+.briefing-history-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.due-item-text {
+  flex-basis: 100%;
+}
+
+.history-frozen-notice {
+  color: var(--badge-color);
+}
+
+.history-meta {
+  font-size: 0.9rem;
+  color: var(--not-done-color);
+}
+
 @media (max-width: 480px) {
   main {
     padding: 0.75rem;

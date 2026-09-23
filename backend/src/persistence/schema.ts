@@ -5,8 +5,13 @@ import type { DatabaseSync } from "node:sqlite";
  * `PRAGMA user_version` on an existing file and treats any mismatch (or a
  * missing/corrupt file) as "needs rebuild" rather than an error (FR-003,
  * research.md §5) — never as a migration to run in place.
+ *
+ * Bumped 1 -> 2 by 004 (specs/004-review-queue-persistence/research.md §4):
+ * adding `review_queue_items`/`mastered_items`/`review_import_errors` is a
+ * shape change, so any existing cache file must be treated as
+ * "version-mismatch" and fully rebuilt — no in-place migration script.
  */
-export const SCHEMA_VERSION = 1;
+export const SCHEMA_VERSION = 2;
 
 /**
  * data-model.md's full table set, translated 1:1 into DDL (FR-008: 001's
@@ -101,6 +106,36 @@ CREATE TABLE IF NOT EXISTS load_run_file_snapshots (
   source_path TEXT NOT NULL,
   content_hash TEXT NOT NULL,
   PRIMARY KEY (load_run_id, source_path)
+);
+
+-- specs/004-review-queue-persistence/data-model.md: three independent flat
+-- tables, no FK relationship to the five tables above or to each other (the
+-- "주제" column is free text, not a roadmap reference — spec.md Assumptions).
+CREATE TABLE IF NOT EXISTS review_queue_items (
+  id TEXT PRIMARY KEY,
+  item TEXT NOT NULL,
+  topic TEXT NOT NULL,
+  first_wrong_date TEXT NOT NULL,
+  stage_label TEXT NOT NULL,
+  next_review_date TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS mastered_items (
+  id TEXT PRIMARY KEY,
+  item TEXT NOT NULL,
+  topic TEXT NOT NULL,
+  first_wrong_date TEXT NOT NULL,
+  mastered_date TEXT NOT NULL
+);
+
+-- No PRIMARY KEY: an audit-trail table with no stable id, replaced wholesale
+-- on every reload -- same character as 001's import_errors table above.
+CREATE TABLE IF NOT EXISTS review_import_errors (
+  source_table TEXT NOT NULL,
+  row_index INTEGER NOT NULL,
+  kind TEXT NOT NULL,
+  detail TEXT NOT NULL,
+  raw_row TEXT NOT NULL
 );
 
 CREATE INDEX IF NOT EXISTS idx_tracks_roadmap_id ON tracks(roadmap_id);

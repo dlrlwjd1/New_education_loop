@@ -1,0 +1,109 @@
+{
+  "_readme": "캔버스(design/canvas/canvas.json) 아트보드 ↔ 웹전환_기능명세_및_개발가이드.md 2.3절 화면 ↔ 실제 백엔드 구현을 잇는 단일 원본. backend/scripts/check-design-sync.ts가 이 파일과 canvas.json, 디스크의 실제 파일을 대조한다. 화면을 추가/제거하거나 구현이 끝나면 이 파일도 같이 갱신한다.",
+  "screens": [
+    {
+      "canvasArtboard": "Main.dc.html",
+      "specScreen": "홈·브리핑",
+      "featureIds": ["F01"],
+      "routes": ["GET /briefing"],
+      "implementation": [
+        "backend/src/web/routes/briefing.ts",
+        "backend/src/web/views/briefing.ts"
+      ]
+    },
+    {
+      "canvasArtboard": "StudyLaunch.dc.html",
+      "specScreen": "학습실 (진입 전 선택 단계, 캔버스에서 세분화)",
+      "featureIds": ["F03"],
+      "routes": [],
+      "implementation": []
+    },
+    {
+      "canvasArtboard": "Study.dc.html",
+      "specScreen": "학습실",
+      "featureIds": ["F04", "F05", "F07"],
+      "routes": [],
+      "implementation": []
+    },
+    {
+      "canvasArtboard": "Review.dc.html",
+      "specScreen": "복습큐 (진행 중인 대화, 캔버스에서 세분화)",
+      "featureIds": ["F06"],
+      "routes": [],
+      "implementation": []
+    },
+    {
+      "canvasArtboard": "ReviewQueue.dc.html",
+      "specScreen": "복습큐",
+      "featureIds": ["F06"],
+      "routes": [],
+      "implementation": []
+    },
+    {
+      "canvasArtboard": "RoadmapOverview.dc.html",
+      "specScreen": "로드맵 목록·상세",
+      "featureIds": ["F02"],
+      "routes": [
+        "GET /",
+        "GET /roadmaps/:roadmapId",
+        "GET /roadmaps/:roadmapId/continue"
+      ],
+      "implementation": [
+        "backend/src/web/routes/roadmaps.ts",
+        "backend/src/web/views/roadmapList.ts",
+        "backend/src/web/views/roadmapDetail.ts"
+      ]
+    },
+    {
+      "canvasArtboard": "Roadmap.dc.html",
+      "specScreen": "로드맵 만들기·수정 (만들기)",
+      "featureIds": ["F08"],
+      "routes": [],
+      "implementation": []
+    },
+    {
+      "canvasArtboard": "RoadmapEdit.dc.html",
+      "specScreen": "로드맵 만들기·수정 (수정)",
+      "featureIds": ["F08"],
+      "routes": [],
+      "implementation": []
+    },
+    {
+      "canvasArtboard": "Library.dc.html",
+      "specScreen": "자료실",
+      "featureIds": ["F09"],
+      "routes": ["GET /materials", "GET /materials/:materialId"],
+      "implementation": [
+        "backend/src/web/routes/materials.ts",
+        "backend/src/web/views/materialSearch.ts",
+        "backend/src/web/views/materialView.ts"
+      ]
+    },
+    {
+      "canvasArtboard": "StudyHistory.dc.html",
+      "specScreen": "학습 기록",
+      "featureIds": ["F10"],
+      "routes": [],
+      "implementation": []
+    },
+    {
+      "canvasArtboard": "BriefingHistory.dc.html",
+      "specScreen": "브리핑 기록",
+      "featureIds": ["F10"],
+      "routes": ["GET /briefing/history", "GET /briefing/history/:id"],
+      "implementation": [
+        "backend/src/web/views/briefingHistory.ts"
+      ]
+    },
+    {
+      "canvasArtboard": "Settings.dc.html",
+      "specScreen": "설정·데이터 관리",
+      "featureIds": ["F11", "F12"],
+      "routes": [],
+      "implementation": []
+    }
+  ],
+  "diagrams": [
+    { "canvasArtboard": "FlowMap.dc.html" }
+  ]
+}

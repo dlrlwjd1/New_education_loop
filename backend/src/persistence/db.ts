@@ -62,6 +62,49 @@ export function openExistingForRead(dbPath: string): OpenResult {
 }
 
 /**
+ * specs/006-study-core-loop, research.md §3: opens the EXISTING live cache
+ * file for a direct write — not a temp-file-then-atomic-replace rebuild like
+ * `buildAndReplace` below, and not read-only like `openExistingForRead`.
+ * `persistence/queries.ts`'s `appendReviewQueueItem()` needs this: landing
+ * one new fact (one wrong answer) into the already-existing file immediately
+ * costs far less than a full `reload()` (~18s measured), and doing a live
+ * `INSERT OR IGNORE` needs a writable connection to the file that is already
+ * there.
+ *
+ * Same validation as `openExistingForRead` (missing/corrupted/version-
+ * mismatched are all reported as a value, never thrown) but without
+ * `readOnly`, since the caller runs an INSERT. This is the smallest addition
+ * that gives `queries.ts` a live write path without touching either of the
+ * two existing helpers below — `openExistingForRead` stays exactly a
+ * read-only guard, `buildAndReplace` stays exactly the full-rebuild path.
+ */
+export function openExistingForWrite(dbPath: string): OpenResult {
+  if (!existsSync(dbPath)) {
+    return { ok: false, reason: "missing" };
+  }
+
+  let db: DatabaseSync;
+  try {
+    db = new DatabaseSync(dbPath);
+  } catch {
+    return { ok: false, reason: "corrupted" };
+  }
+
+  try {
+    const version = readSchemaVersion(db);
+    if (version !== SCHEMA_VERSION) {
+      safeClose(db);
+      return { ok: false, reason: "version-mismatch" };
+    }
+  } catch {
+    safeClose(db);
+    return { ok: false, reason: "corrupted" };
+  }
+
+  return { ok: true, db };
+}
+
+/**
  * Builds a brand new database at a temp path beside `dbPath`, lets `populate`
  * fill it (schema + data), then atomically replaces `dbPath` with it via
  * `fs.renameSync` (research.md §2 — POSIX rename within the same filesystem

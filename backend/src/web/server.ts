@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import express, { type ErrorRequestHandler } from "express";
 import roadmapsRouter from "./routes/roadmaps.js";
 import materialsRouter from "./routes/materials.js";
+import briefingRouter from "./routes/briefing.js";
 import { renderMessage } from "./views/layout.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -48,8 +49,13 @@ const handleError: ErrorRequestHandler = (err, _req, res, _next) => {
 export function createApp(): express.Express {
   const app = express();
   app.use(express.static(path.join(HERE, "public")));
+  // 005-briefing's `POST /briefing/rerun` reads `req.body.roadmapId` from a
+  // standard HTML form submission — no prior route registered this, so it is
+  // added here (003/004 never needed a POST body parser).
+  app.use(express.urlencoded({ extended: false }));
   app.use(roadmapsRouter);
   app.use(materialsRouter);
+  app.use(briefingRouter);
   app.use(handleError);
   return app;
 }

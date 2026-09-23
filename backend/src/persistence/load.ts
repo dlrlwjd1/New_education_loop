@@ -1,5 +1,10 @@
 import type { DatabaseSync, StatementSync } from "node:sqlite";
+import { existsSync, readFileSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import type { ImportBatch, Roadmap, Phase } from "../ingestion/types.js";
+import { parseReviewQueue } from "../reviewQueue/parseReviewQueue.js";
+import type { ParseReviewQueueResult } from "../reviewQueue/parseReviewQueue.js";
 
 interface PhaseInsertStmts {
   insertPhase: StatementSync;
@@ -272,6 +277,98 @@ export function recordLoadRun(db: DatabaseSync, batch: ImportBatch, startedAt: s
     }
     seen.add(mapping.sourcePath);
     insertSnapshot.run(loadRunId, mapping.sourcePath, mapping.contentHash);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 004 — review queue (specs/004-review-queue-persistence)
+// ---------------------------------------------------------------------------
+
+const HERE = path.dirname(fileURLToPath(import.meta.url));
+// backend/src/persistence -> backend/src -> backend -> repo root
+const DEFAULT_REPO_ROOT = path.resolve(HERE, "..", "..", "..");
+
+/**
+ * The single source file this feature reads (spec.md/plan.md) — repo-root
+ * relative, same convention as `db.ts`'s `DEFAULT_DB_PATH`.
+ */
+export const DEFAULT_REVIEW_QUEUE_PATH = path.join(DEFAULT_REPO_ROOT, "내학습", "복습큐.md");
+
+/**
+ * Reads `내학습/복습큐.md` and parses it via `reviewQueue/parseReviewQueue.ts`
+ * (contracts/review-queue-library.md). Reuses the same plain
+ * `existsSync`/`readFileSync` pattern 001's ingestion modules already use
+ * (e.g. `ingestion/exampleSeparation.ts`) rather than a new file-I/O layer.
+ *
+ * A missing file is treated as empty content, never an error (spec.md
+ * FR-014, Edge Cases: "원본 파일 자체가 없는 경우… 빈 상태로 처리하고 오류로
+ * 취급하지 않는다").
+ */
+export function loadReviewQueue(reviewQueuePath: string = DEFAULT_REVIEW_QUEUE_PATH): ParseReviewQueueResult {
+  const content = existsSync(reviewQueuePath) ? readFileSync(reviewQueuePath, "utf8") : "";
+  return parseReviewQueue(content);
+}
+
+/**
+ * Inserts one `parseReviewQueue()` result into a freshly-created (schema
+ * already applied), empty SQLite database — same contract as
+ * `populateDatabase` above: must only ever be called against a brand-new
+ * temp-path database inside `db.ts`'s `buildAndReplace`, in the SAME
+ * atomic-rebuild pass as `populateDatabase`/`recordLoadRun` (research.md §5
+ * — one atomic swap, never a second `reload()`/second SQLite file, so a
+ * reader never observes roadmap data and review-queue data from two
+ * different points in time).
+ *
+ * Uses `INSERT OR IGNORE` for `review_queue_items`/`mastered_items` rather
+ * than a plain `INSERT`: `id` is a deterministic hash of
+ * (item, topic, firstWrongDate) (research.md §2), so two rows in the source
+ * file that are byte-identical on all three of those fields are — by this
+ * feature's own identity rule (spec.md FR-012: identity is the id, not
+ * "looks similar") — literally the same item, not two items that merely look
+ * alike. This is a deviation from what data-model.md states literally (a
+ * `PRIMARY KEY` with no ON CONFLICT clause, which would make a plain INSERT
+ * throw and abort the entire reload over one duplicated line): data-model.md
+ * only discusses the PK as the *cross-reload* idempotency guarantee
+ * (FR-010), it does not say what should happen for an intra-file literal
+ * duplicate, and crashing the whole reload over one duplicated row would
+ * contradict this feature's general "one bad row never takes down the rest"
+ * posture (spec.md US2). `review_import_errors` has no PK (audit trail,
+ * replaced wholesale every reload, like 001's `import_errors`), so it uses a
+ * plain INSERT.
+ */
+export function populateReviewQueue(db: DatabaseSync, result: ParseReviewQueueResult): void {
+  const insertActiveItem = db.prepare(
+    "INSERT OR IGNORE INTO review_queue_items (id, item, topic, first_wrong_date, stage_label, next_review_date) VALUES (?, ?, ?, ?, ?, ?)",
+  );
+  for (const activeItem of result.activeItems) {
+    insertActiveItem.run(
+      activeItem.id,
+      activeItem.item,
+      activeItem.topic,
+      activeItem.firstWrongDate,
+      activeItem.stageLabel,
+      activeItem.nextReviewDate,
+    );
+  }
+
+  const insertMasteredItem = db.prepare(
+    "INSERT OR IGNORE INTO mastered_items (id, item, topic, first_wrong_date, mastered_date) VALUES (?, ?, ?, ?, ?)",
+  );
+  for (const masteredItem of result.masteredItems) {
+    insertMasteredItem.run(
+      masteredItem.id,
+      masteredItem.item,
+      masteredItem.topic,
+      masteredItem.firstWrongDate,
+      masteredItem.masteredDate,
+    );
+  }
+
+  const insertImportError = db.prepare(
+    "INSERT INTO review_import_errors (source_table, row_index, kind, detail, raw_row) VALUES (?, ?, ?, ?, ?)",
+  );
+  for (const error of result.errors) {
+    insertImportError.run(error.sourceTable, error.rowIndex, error.kind, error.detail, error.rawRow);
   }
 }
 

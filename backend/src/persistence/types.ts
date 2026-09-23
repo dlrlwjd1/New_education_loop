@@ -15,6 +15,12 @@ export interface ReloadOptions {
   coursesRoot?: string;
   /** Cache file path; defaults to `db.ts`'s `DEFAULT_DB_PATH`. Test-only. */
   dbPath?: string;
+  /**
+   * specs/004-review-queue-persistence: path to the review-queue source
+   * file; defaults to `load.ts`'s `DEFAULT_REVIEW_QUEUE_PATH`
+   * (`내학습/복습큐.md`). Test fixtures only.
+   */
+  reviewQueuePath?: string;
 }
 
 export interface LoadResult {
@@ -90,4 +96,38 @@ export interface ReviewNeededItem {
   sourcePath: string;
   errorKind: string;
   detail: string;
+}
+
+// ---------------------------------------------------------------------------
+// 004 — review queue (contracts/review-queue-library.md)
+// ---------------------------------------------------------------------------
+
+export interface DueReviewItem {
+  id: string;
+  item: string;
+  topic: string;
+  nextReviewDate: string;
+  /** `referenceDate` - `nextReviewDate`, in days. Always >= 0 (FR-004). */
+  overdueDays: number;
+}
+
+export interface ReviewQueueStatus {
+  totalActiveCount: number;
+  /** Sorted by `overdueDays` descending — callers never need to re-sort (FR-004). */
+  dueItems: DueReviewItem[];
+}
+
+export interface MasteredItemView {
+  id: string;
+  item: string;
+  topic: string;
+  firstWrongDate: string;
+  masteredDate: string;
+}
+
+export interface ReviewImportErrorView {
+  sourceTable: "active" | "mastered";
+  kind: "date_unparseable" | "row_incomplete";
+  detail: string;
+  rawRow: string;
 }
